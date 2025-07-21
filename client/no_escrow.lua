@@ -1,0 +1,81 @@
+-- # Get Framework ------------------------------------------------------------------------------------
+
+if Config.Settings['Framework'] == "esx" then
+    ESX = exports["es_extended"]:getSharedObject()
+elseif Config.Settings['Framework'] == "oldesx" then
+    ESX = nil
+    TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+elseif Config.Settings['Framework'] == "qb" then
+    QBCore = exports['qb-core']:GetCoreObject()
+elseif Config.Settings['Framework'] == "oldqb" then
+    QBCore = nil
+    Citizen.CreateThread(function()
+        while QBCore == nil do
+            TriggerEvent('QBCore:GetObject', function(obj) QBCore = obj end)
+            Citizen.Wait(200)
+        end
+    end)
+elseif Config.Settings['Framework'] == "qbx" then
+    if GetResourceState("qbx_core") == "started" then
+        QBCore = exports['qbx-core']:GetCoreObject()
+    elseif GetResourceState("qbx-core") == "started" then
+        QBCore = exports['qbx_core']:GetCoreObject()
+    end
+elseif Config.Settings['Framework'] == "custom" then
+    -- | # If you are using a custom framework and need anything to bring it, you can write it in this section.
+end
+
+-- # Functions ------------------------------------------------------------------------------------
+
+Is_Player_Death = function(Framework)
+    local Death = false
+    if Framework == "qbcore" then
+        QBCore.Functions.GetPlayerData(function(PlayerData)
+            if PlayerData.metadata['isdead'] == true then
+                Death = true
+            end
+        end)
+    elseif Framework == "esx" then
+        ESX.TriggerServerCallback('n-spawn-selector:server:isdead', function(isdead)
+            if isdead == true then
+                Death = true
+            end
+        end)
+    elseif Framework == "custom" then
+        -- | # If you are using a custom framework, you can write here your dead check callback or dead check export.
+    end
+    return Death
+end
+
+Get_Last_Location = function(Framework)
+    local Coords = nil
+    if Framework == "qbcore" then
+        QBCore.Functions.GetPlayerData(function(PlayerData)
+            if PlayerData.position then
+                Coords = PlayerData.position
+            end
+        end)
+    elseif Framework == "esx" then
+        ESX.TriggerServerCallback('n-spawn-selector:server:getlastlocation', function(lastlocation)
+            if lastlocation then
+                Coords = lastlocation
+            end
+        end)
+    elseif Framework == "custom" then
+        -- | # If you are using a custom framework, you can write here your get last location callback or get last location export.
+    end
+    return Coords
+end
+
+After_Spawn = function(Framework)
+    if Framework == "qbcore" then
+        TriggerServerEvent('QBCore:Server:OnPlayerLoaded')
+        TriggerEvent('QBCore:Client:OnPlayerLoaded')
+        TriggerServerEvent('qb-houses:server:SetInsideMeta', 0, false)
+        TriggerServerEvent('qb-apartments:server:SetInsideMeta', 0, 0, false)
+    elseif Framework == "esx" then
+        -- | # If you are using ESX and need to trigger any event or do something after the player spawns, you can write here.
+    elseif Framework == "custom" then
+        -- | # If you are using a custom framework and need to trigger any event or do something after the player spawns, you can write here.
+    end
+end
