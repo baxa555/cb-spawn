@@ -74,7 +74,7 @@ Set_Camera = function(Type, Data)
         if not DoesCamExist(Camera) then
             Camera = CreateCam('DEFAULT_SCRIPTED_CAMERA', true)
         end
-        SetEntityCoords(ply_ped, Config.Spawns[1].Spawn_Coords.x, Config.Spawns[1].Spawn_Coords.y, Config.Spawns[1].Spawn_Coords.z)
+        SetEntityCoords(ply_ped, Config.Spawns[1].Spawn_Coords.x, Config.Spawns[1].Spawn_Coords.y, Config.Spawns[1].Spawn_Coords.z, true, false, false, false)
         SetCamCoord(Camera, Config.Spawns[1].Cam_Coords.x, Config.Spawns[1].Cam_Coords.y, Config.Spawns[1].Cam_Coords.z)
         PointCamAtCoord(Camera, Config.Spawns[1].Spawn_Coords.x, Config.Spawns[1].Spawn_Coords.y, Config.Spawns[1].Spawn_Coords.z)
         SetCamActive(Camera, true)
@@ -82,7 +82,7 @@ Set_Camera = function(Type, Data)
     elseif Type == "New" then
         DoScreenFadeOut(500)
         Wait(500)
-        SetEntityCoords(ply_ped, Config.Spawns[Data.Selected].Spawn_Coords.x, Config.Spawns[Data.Selected].Spawn_Coords.y, Config.Spawns[Data.Selected].Spawn_Coords.z)
+        SetEntityCoords(ply_ped, Config.Spawns[Data.Selected].Spawn_Coords.x, Config.Spawns[Data.Selected].Spawn_Coords.y, Config.Spawns[Data.Selected].Spawn_Coords.z, true, false, false, false)
         SetCamCoord(Camera, Config.Spawns[Data.Selected].Cam_Coords.x, Config.Spawns[Data.Selected].Cam_Coords.y, Config.Spawns[Data.Selected].Cam_Coords.z)
         PointCamAtCoord(Camera, Config.Spawns[Data.Selected].Spawn_Coords.x, Config.Spawns[Data.Selected].Spawn_Coords.y, Config.Spawns[Data.Selected].Spawn_Coords.z)
         Wait(500)

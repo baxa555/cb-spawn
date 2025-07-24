@@ -64,7 +64,7 @@ RegisterNUICallback('SpawnLocation', function(Data)
     DoScreenFadeOut(500) Wait(1000)
     SendNUIMessage({type = "CloseMenu"})
     Destroy_Camera()
-    SetEntityCoords(ply_ped, Config.Spawns[Data.Location].Spawn_Coords.x, Config.Spawns[Data.Location].Spawn_Coords.y, Config.Spawns[Data.Location].Spawn_Coords.z)
+    SetEntityCoords(ply_ped, Config.Spawns[Data.Location].Spawn_Coords.x, Config.Spawns[Data.Location].Spawn_Coords.y, Config.Spawns[Data.Location].Spawn_Coords.z, true, false, false, false)
     SetEntityVisible(ply_ped, true)
     FreezeEntityPosition(ply_ped, false)
     After_Spawn(Framework)
@@ -86,8 +86,22 @@ RegisterNUICallback('SpawnLastLocation', function()
     DoScreenFadeOut(500) Wait(1000)
     SendNUIMessage({type = "CloseMenu"})
     Destroy_Camera()
-    local cooords = Get_Last_Location(Framework)
-    SetEntityCoords(ply_ped, true)
+    
+    -- Son lokasyonu al ve kontrol et
+    local coords = Get_Last_Location(Framework)
+    if coords and coords.x and coords.y and coords.z then
+        -- Koordinatları doğru şekilde ayarla
+        SetEntityCoords(ply_ped, coords.x, coords.y, coords.z, true, false, false, false)
+        -- Eğer heading varsa onu da ayarla
+        if coords.w or coords.heading then
+            local heading = coords.w or coords.heading
+            SetEntityHeading(ply_ped, heading)
+        end
+    else
+        -- Eğer son lokasyon bulunamazsa varsayılan spawn noktasına git
+        SetEntityCoords(ply_ped, Config.Spawns[1].Spawn_Coords.x, Config.Spawns[1].Spawn_Coords.y, Config.Spawns[1].Spawn_Coords.z, true, false, false, false)
+    end
+    
     SetEntityVisible(ply_ped, true)
     FreezeEntityPosition(ply_ped, false)
     After_Spawn(Framework)
@@ -172,7 +186,7 @@ local function SetCam(campos)
     cam = CreateCamWithParams('DEFAULT_SCRIPTED_CAMERA', campos.x, campos.y, campos.z + camZPlus2, 300.00, 0.00, 0.00, 110.00, false, 0)
     PointCamAtCoord(cam, campos.x, campos.y, campos.z + pointCamCoords2)
     SetCamActiveWithInterp(cam, cam2, cam2Time, true, true)
-    SetEntityCoords(PlayerPedId(), campos.x, campos.y, campos.z)
+    SetEntityCoords(PlayerPedId(), campos.x, campos.y, campos.z, true, false, false, false)
 end
 
 RegisterNUICallback('setCam', function(data, cb)
@@ -244,7 +258,7 @@ RegisterNUICallback('spawnplayer', function(data, cb)
         PreSpawnPlayer()
         QBCore.Functions.GetPlayerData(function(pd)
             ped = PlayerPedId()
-            SetEntityCoords(ped, pd.position.x, pd.position.y, pd.position.z)
+            SetEntityCoords(ped, pd.position.x, pd.position.y, pd.position.z, true, false, false, false)
             SetEntityHeading(ped, pd.position.a)
             FreezeEntityPosition(ped, false)
         end)
@@ -271,13 +285,13 @@ RegisterNUICallback('spawnplayer', function(data, cb)
     elseif type == 'normal' then
         local pos = QB.Spawns[location].coords
         PreSpawnPlayer()
-        SetEntityCoords(ped, pos.x, pos.y, pos.z)
+        SetEntityCoords(ped, pos.x, pos.y, pos.z, true, false, false, false)
         TriggerServerEvent('QBCore:Server:OnPlayerLoaded')
         TriggerEvent('QBCore:Client:OnPlayerLoaded')
         TriggerServerEvent('qb-houses:server:SetInsideMeta', 0, false)
         TriggerServerEvent('qb-apartments:server:SetInsideMeta', 0, 0, false)
         Wait(500)
-        SetEntityCoords(ped, pos.x, pos.y, pos.z)
+        SetEntityCoords(ped, pos.x, pos.y, pos.z, true, false, false, false)
         SetEntityHeading(ped, pos.w)
         PostSpawnPlayer()
     end

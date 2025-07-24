@@ -30,17 +30,22 @@ end
 Is_Player_Death = function(Framework)
     local Death = false
     if Framework == "qbcore" then
-        QBCore.Functions.GetPlayerData(function(PlayerData)
-            if PlayerData.metadata['isdead'] == true then
-                Death = true
-            end
-        end)
+        local PlayerData = QBCore.Functions.GetPlayerData()
+        if PlayerData and PlayerData.metadata and PlayerData.metadata['isdead'] == true then
+            Death = true
+        end
     elseif Framework == "esx" then
         ESX.TriggerServerCallback('n-spawn-selector:server:isdead', function(isdead)
             if isdead == true then
                 Death = true
             end
         end)
+        -- ESX için callback sonucunu beklemek için kısa bir bekleme
+        local attempts = 0
+        while Death == false and attempts < 10 do
+            Wait(100)
+            attempts = attempts + 1
+        end
     elseif Framework == "custom" then
         -- | # If you are using a custom framework, you can write here your dead check callback or dead check export.
     end
@@ -50,17 +55,22 @@ end
 Get_Last_Location = function(Framework)
     local Coords = nil
     if Framework == "qbcore" then
-        QBCore.Functions.GetPlayerData(function(PlayerData)
-            if PlayerData.position then
-                Coords = PlayerData.position
-            end
-        end)
+        local PlayerData = QBCore.Functions.GetPlayerData()
+        if PlayerData and PlayerData.position then
+            Coords = PlayerData.position
+        end
     elseif Framework == "esx" then
         ESX.TriggerServerCallback('n-spawn-selector:server:getlastlocation', function(lastlocation)
             if lastlocation then
                 Coords = lastlocation
             end
         end)
+        -- ESX için callback sonucunu beklemek için kısa bir bekleme
+        local attempts = 0
+        while Coords == nil and attempts < 10 do
+            Wait(100)
+            attempts = attempts + 1
+        end
     elseif Framework == "custom" then
         -- | # If you are using a custom framework, you can write here your get last location callback or get last location export.
     end
