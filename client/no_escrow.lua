@@ -1,5 +1,3 @@
--- # Get Framework ------------------------------------------------------------------------------------
-
 if Config.Settings['Framework'] == "esx" then
     ESX = exports["es_extended"]:getSharedObject()
 elseif Config.Settings['Framework'] == "oldesx" then
@@ -22,10 +20,7 @@ elseif Config.Settings['Framework'] == "qbx" then
         QBCore = exports['qbx_core']:GetCoreObject()
     end
 elseif Config.Settings['Framework'] == "custom" then
-    -- | # If you are using a custom framework and need anything to bring it, you can write it in this section.
 end
-
--- # Functions ------------------------------------------------------------------------------------
 
 Is_Player_Death = function(Framework)
     local Death = false
@@ -47,7 +42,6 @@ Is_Player_Death = function(Framework)
             attempts = attempts + 1
         end
     elseif Framework == "custom" then
-        -- | # If you are using a custom framework, you can write here your dead check callback or dead check export.
     end
     return Death
 end
@@ -72,7 +66,6 @@ Get_Last_Location = function(Framework)
             attempts = attempts + 1
         end
     elseif Framework == "custom" then
-        -- | # If you are using a custom framework, you can write here your get last location callback or get last location export.
     end
     return Coords
 end
@@ -84,8 +77,6 @@ After_Spawn = function(Framework)
         TriggerServerEvent('qb-houses:server:SetInsideMeta', 0, false)
         TriggerServerEvent('qb-apartments:server:SetInsideMeta', 0, 0, false)
     elseif Framework == "esx" then
-        -- | # If you are using ESX and need to trigger any event or do something after the player spawns, you can write here.
     elseif Framework == "custom" then
-        -- | # If you are using a custom framework and need to trigger any event or do something after the player spawns, you can write here.
     end
 end

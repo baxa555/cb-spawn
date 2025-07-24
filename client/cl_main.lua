@@ -1,8 +1,4 @@
--- # Necessary ------------------------------------------------------------------------------------
-
 local Selected_Location = nil
-
--- # Open Event ------------------------------------------------------------------------------------
 
 RegisterNetEvent('n-spawn-selector:client:open', function()
     local ply_ped = PlayerPedId()
@@ -17,8 +13,6 @@ RegisterNetEvent('n-spawn-selector:client:open', function()
     Wait(1000) DoScreenFadeIn(500)
 end)
 
--- # Open from qb-spawn Event ------------------------------------------------------------------------------------
-
 RegisterNetEvent('n-spawn-selector:client:openFromQBSpawn', function()
     local ply_ped = PlayerPedId()
     local server_data = {Day = Get_Day(), Time = GetClockHours()..":"..GetClockMinutes(), WindSpeed = GetWindSpeed(), Weather = Get_Weather(), Temperature = Get_Degree()}
@@ -32,15 +26,11 @@ RegisterNetEvent('n-spawn-selector:client:openFromQBSpawn', function()
     Wait(1000) DoScreenFadeIn(500)
 end)
 
--- # New Location NUI Callback ------------------------------------------------------------------------------------
-
 RegisterNUICallback('NewLocation', function(Data)
     local ply_ped = PlayerPedId()
     Selected_Location = Data.Selected
     Set_Camera("New", Data)
-end) 
-
--- # Spawn Location NUI Callback ------------------------------------------------------------------------------------
+end)
 
 RegisterNUICallback('SpawnLocation', function(Data)
     local ply_ped = PlayerPedId()
@@ -69,9 +59,7 @@ RegisterNUICallback('SpawnLocation', function(Data)
     FreezeEntityPosition(ply_ped, false)
     After_Spawn(Framework)
     Wait(2000) DoScreenFadeIn(500)
-end) 
-
--- #  BURAYA BIDAHA BAK ------------------------------------------------------------------------------------
+end)
 RegisterNUICallback('SpawnLastLocation', function()
     local ply_ped = PlayerPedId()
     local Framework = nil

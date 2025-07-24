@@ -1,5 +1,3 @@
--- # Necessary ------------------------------------------------------------------------------------
-
 local Weather_Hashes = {
     [916995460] = Config.Locale['Clear'],
     [-1750463879] = Config.Locale['Extra Sunny'],
@@ -38,15 +36,11 @@ local Days = {
     [6] = Config.Locale['Saturday'],
 }
 
--- # Get Weather Function ------------------------------------------------------------------------------------
-
 Get_Weather = function()
     local weather_hash = GetPrevWeatherTypeHashName()
     local weather_name = Weather_Hashes[weather_hash]
     return weather_name
 end
-
--- # Get Degree Function ------------------------------------------------------------------------------------
 
 Get_Degree = function()
     local weather_hash = GetPrevWeatherTypeHashName()
@@ -55,15 +49,11 @@ Get_Degree = function()
     return degree
 end
 
--- # Get Day ------------------------------------------------------------------------------------
-
 Get_Day = function()
     local day_id = GetClockDayOfWeek()
     local day_name = Days[day_id]
     return day_name
 end
-
--- # Camera Functions ------------------------------------------------------------------------------------
 
 local Camera = nil
 local Camera_Ofs = nil

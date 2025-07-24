@@ -1,5 +1,3 @@
--- # Callbacks for ESX ------------------------------------------------------------------------------------
-
 if Config.Settings['Framework'] == "esx" or Config.Settings['Framework'] == "oldesx" then
     ESX.RegisterServerCallback('n-spawn-selector:server:getlastlocation', function(source, cb)
         local src = source

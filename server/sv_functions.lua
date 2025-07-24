@@ -1,5 +1,3 @@
--- # SQL Function ------------------------------------------------------------------------------------
-
 Execute_Sql = function(query, parameters, cb)
     local promise = promise:new()
 

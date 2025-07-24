@@ -1,5 +1,3 @@
--- # Get Framework ------------------------------------------------------------------------------------
-
 if Config.Settings['Framework'] == "esx" then
     ESX = exports["es_extended"]:getSharedObject()
 elseif Config.Settings['Framework'] == "oldesx" then
@@ -22,5 +20,4 @@ elseif Config.Settings['Framework'] == "qbx" then
         QBCore = exports['qbx_core']:GetCoreObject()
     end
 elseif Config.Settings['Framework'] == "custom" then
-    -- | # If you are using a custom framework and need anything to bring it, you can write it in this section.
 end

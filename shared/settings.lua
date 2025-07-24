@@ -1,14 +1,14 @@
 Config = {}
 
--- # Main Settings  ------------------------------------------------------------------------------------
+
 
 Config.Settings = {
     ['Framework'] = 'qb',
     ['SQL'] = 'oxmysql',
-    ['Force_Last_Location_For_Dead'] = true, -- | # If you set this section to true, the person who enters the game dead can only select last location.
+    ['Force_Last_Location_For_Dead'] = true,
 }
 
--- # Spawns Locations  ------------------------------------------------------------------------------------
+
 
 Config.Spawns = {
     {
